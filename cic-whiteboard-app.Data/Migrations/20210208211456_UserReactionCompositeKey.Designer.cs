@@ -4,14 +4,16 @@ using CIC.WhiteboardApp.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace cic_whiteboard_app.Data.Migrations
 {
     [DbContext(typeof(WhiteboardDbContext))]
-    partial class WhiteboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210208211456_UserReactionCompositeKey")]
+    partial class UserReactionCompositeKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

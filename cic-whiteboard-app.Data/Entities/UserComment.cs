@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CIC.WhiteboardApp.Data.Entities
 {
-    public class Comment
+    public class UserComment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -16,8 +16,8 @@ namespace CIC.WhiteboardApp.Data.Entities
         public int PostId { get; set; }
         public Post Post { get; set; }
 
-        public User User { get; set; }
         public int UserId { get; set; }
+        public User User { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime LastModifiedTime { get; set; }

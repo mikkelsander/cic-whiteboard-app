@@ -8,13 +8,14 @@ namespace CIC.WhiteboardApp.Data.Data
         public WhiteboardDbContext(DbContextOptions<WhiteboardDbContext> options) : base(options)
         { }
 
-        public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<UserComment> UserComments { get; set; }
         public DbSet<UserReaction> UserReactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
 
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Posts)
@@ -27,21 +28,24 @@ namespace CIC.WhiteboardApp.Data.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserReaction>()
-              .HasOne(r => r.Post)
-              .WithMany(p => p.Reactions)
-              .OnDelete(DeleteBehavior.NoAction);
+              .HasKey(r => new { r.PostId, r.UserId });
 
-            modelBuilder.Entity<UserReaction>()
-              .HasOne(r => r.User)
-              .WithMany(u => u.Reactions)
-              .OnDelete(DeleteBehavior.NoAction);
+            //modelBuilder.Entity<UserReaction>()
+            //  .HasOne(r => r.Post)
+            //  .WithMany(p => p.Reactions)
+            //  .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Comment>()
+            //modelBuilder.Entity<UserReaction>()
+            //  .HasOne(r => r.User)
+            //  .WithMany(u => u.Reactions)
+            //  .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserComment>()
               .HasOne(c => c.Post)
               .WithMany(p => p.Comments)
               .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Comment>()
+            modelBuilder.Entity<UserComment>()
               .HasOne(c => c.User)
               .WithMany(u => u.Comments)
               .OnDelete(DeleteBehavior.NoAction);

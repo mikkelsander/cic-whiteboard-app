@@ -18,7 +18,7 @@ namespace CIC.WhiteboardApp.Data.Entities
         public UserRole UserRole { get; set; }
 
         public ICollection<Post> Posts { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<UserComment> Comments { get; set; }
         public ICollection<UserReaction> Reactions { get; set; }
     }
 }

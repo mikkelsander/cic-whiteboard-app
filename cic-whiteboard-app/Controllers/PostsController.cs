@@ -27,10 +27,13 @@ namespace CIC.WhiteboardApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts
+                .Include(p => p.Comments)
+                .Include(p => p.Reactions)
+                .ToListAsync();
         }
 
-        // GET: api/Posts/5
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Post>> GetPost(int id)
         {
@@ -44,10 +47,7 @@ namespace CIC.WhiteboardApp.Controllers
             return post;
         }
 
-        // PUT: api/Posts/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+
         public async Task<IActionResult> PutPost(int id, Post post)
         {
             if (id != post.Id)
@@ -63,7 +63,7 @@ namespace CIC.WhiteboardApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PostExists(id))
+                if (!await PostExists(id))
                 {
                     return NotFound();
                 }
@@ -76,19 +76,17 @@ namespace CIC.WhiteboardApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Posts
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+
         [HttpPost]
         public async Task<ActionResult<Post>> PostPost(Post post)
         {
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPost", new { id = post.Id }, post);
+            return Created("", post);
         }
 
-        // DELETE: api/Posts/5
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<Post>> DeletePost(int id)
         {
@@ -104,9 +102,97 @@ namespace CIC.WhiteboardApp.Controllers
             return post;
         }
 
-        private bool PostExists(int id)
+
+        [HttpPost("{postId}/reactions")]
+        public async Task<ActionResult<Post>> PostReaction(int postId, UserReaction reactionDto)
         {
-            return _context.Posts.Any(e => e.Id == id);
+
+            if (!await PostExists(postId))
+            {
+                return NotFound();
+            }
+
+            var reaction = _context.UserReactions
+                .Find(reactionDto.PostId, reactionDto.UserId);
+
+            if (reaction == null)
+            {
+                reaction = reactionDto;
+                _context.UserReactions.Add(reaction);
+            }
+            else
+            {
+                //override reaction type (consider a non-reaction type to delete reactions)
+                reaction.Type = reactionDto.Type;
+                _context.UserReactions.Update(reaction);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Created("", reaction);
         }
+
+
+        [HttpPost("{postId}/comments")]
+        public async Task<ActionResult<Post>> PostComment(int postId, UserComment commentDto)
+        {
+
+            if (!await PostExists(postId))
+            {
+                return NotFound();
+            }
+
+            var comment = _context.UserComments
+                .Find(commentDto.Id);
+
+            if (comment == null)
+            {
+                //map to new comment entity etc.
+                comment = commentDto;
+                _context.UserComments.Add(comment);
+            }
+            else
+            {
+                //override only editable values etc.
+                comment = commentDto;
+                _context.UserComments.Update(comment);
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Created("", comment);
+        }
+
+
+        [HttpDelete("{postId}/comments/{commentId}")]
+        public async Task<ActionResult<Post>> DeleteComment(int postId, int commentId)
+        {
+
+            if (!await PostExists(postId))
+            {
+                return NotFound("Post not found.");
+            }
+
+            var comment = _context.UserComments
+                .Find(commentId);
+
+            if (comment == null)
+            {
+                return NotFound("Comment not found.");
+            }
+
+            _context.UserComments.Remove(comment);
+
+            await _context.SaveChangesAsync();
+
+            return Created("", comment);
+        }
+
+
+        private async Task<bool> PostExists(int id)
+        {
+            return await _context.Posts.AnyAsync(e => e.Id == id);
+        }
+
     }
 }

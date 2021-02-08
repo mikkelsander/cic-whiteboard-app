@@ -23,6 +23,6 @@ namespace CIC.WhiteboardApp.Data.Entities
         public User User { get; set; }
 
         public ICollection<UserReaction> Reactions { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<UserComment> Comments { get; set; }
     }
 }
