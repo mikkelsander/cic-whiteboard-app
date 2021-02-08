@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CIC.WhiteboardApp
+namespace cic_whiteboard_app.Data
 {
     public class Program
     {

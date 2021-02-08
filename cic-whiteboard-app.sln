@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cic-whiteboard-app", "cic-whiteboard-app\cic-whiteboard-app.csproj", "{528FBDDC-B7BA-4099-B180-ABD22531122B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CIC.WhiteboardApp", "cic-whiteboard-app\CIC.WhiteboardApp.csproj", "{528FBDDC-B7BA-4099-B180-ABD22531122B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIC.WhiteboardApp.Data", "cic-whiteboard-app.Data\CIC.WhiteboardApp.Data.csproj", "{BBD17B1B-A3B3-4671-86B1-6AC375A440DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{528FBDDC-B7BA-4099-B180-ABD22531122B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{528FBDDC-B7BA-4099-B180-ABD22531122B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{528FBDDC-B7BA-4099-B180-ABD22531122B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD17B1B-A3B3-4671-86B1-6AC375A440DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD17B1B-A3B3-4671-86B1-6AC375A440DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD17B1B-A3B3-4671-86B1-6AC375A440DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD17B1B-A3B3-4671-86B1-6AC375A440DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
