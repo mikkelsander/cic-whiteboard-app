@@ -8,10 +8,8 @@ namespace CIC.WhiteboardApp.Data.Data
         public WhiteboardDbContext(DbContextOptions<WhiteboardDbContext> options) : base(options)
         { }
 
-        public DbSet<Board> Boards { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Team> Teams { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserReaction> UserReactions { get; set; }
 

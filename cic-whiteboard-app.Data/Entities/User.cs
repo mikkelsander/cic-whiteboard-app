@@ -12,9 +12,6 @@ namespace CIC.WhiteboardApp.Data.Entities
 
         public string Name { get; set; }
 
-        public int TeamId { get; set; }
-        public Team Team { get; set; }
-
         public ICollection<Post> Posts { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<UserReaction> Reactions { get; set; }
