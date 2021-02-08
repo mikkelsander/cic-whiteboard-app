@@ -1,4 +1,6 @@
 using CIC.WhiteboardApp.Data.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -25,6 +27,9 @@ namespace CIC.WhiteboardApp
             services.AddDbContext<WhiteboardDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                .EnableDetailedErrors()
                .EnableSensitiveDataLogging()); // remember to remove this in production
+
+            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+               .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
             services.AddControllers();
 
@@ -58,12 +63,15 @@ namespace CIC.WhiteboardApp
 
             app.UseRouting();
 
+
+            app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
+
 
             app.UseSpa(spa =>
             {

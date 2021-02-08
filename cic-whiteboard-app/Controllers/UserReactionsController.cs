@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CIC.WhiteboardApp.Data.Data;
 using CIC.WhiteboardApp.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CIC.WhiteboardApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserReactionsController : ControllerBase
     {
         private readonly WhiteboardDbContext _context;
