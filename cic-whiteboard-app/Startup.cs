@@ -31,7 +31,9 @@ namespace CIC.WhiteboardApp
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -85,6 +87,22 @@ namespace CIC.WhiteboardApp
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            UpdateDatabase(app);
+
+        }
+
+        private static void UpdateDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices
+            .GetRequiredService<IServiceScopeFactory>()
+            .CreateScope())
+            {
+                using (var context = serviceScope.ServiceProvider.GetService<WhiteboardDbContext>())
+                {
+                    context.Database.Migrate();
+                }
+            }
         }
     }
 }

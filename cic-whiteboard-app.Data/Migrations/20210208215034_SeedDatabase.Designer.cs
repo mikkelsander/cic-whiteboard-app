@@ -4,14 +4,16 @@ using CIC.WhiteboardApp.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace cic_whiteboard_app.Data.Migrations
 {
     [DbContext(typeof(WhiteboardDbContext))]
-    partial class WhiteboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210208215034_SeedDatabase")]
+    partial class SeedDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,69 +75,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Cool Post Title 3",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Content = "Cool post content 4...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 4",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Content = "Cool post content 5...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 5",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Content = "Cool post content 6...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 6",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Content = "Cool post content 7...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 7",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Content = "Cool post content 8...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 8",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Content = "Cool post content 9...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 9",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Content = "Cool post content 10...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Title = "Cool Post Title 10",
                             UserId = 2
                         });
                 });
@@ -241,70 +180,7 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool comment content...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 4,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 9,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 4,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 7,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 6,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 8,
-                            UserId = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 10,
-                            UserId = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Content = "Cool comment content...",
-                            CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PostId = 10,
+                            PostId = 3,
                             UserId = 1
                         });
                 });
@@ -341,19 +217,7 @@ namespace cic_whiteboard_app.Data.Migrations
                         },
                         new
                         {
-                            PostId = 6,
-                            UserId = 1,
-                            Type = 0
-                        },
-                        new
-                        {
-                            PostId = 8,
-                            UserId = 2,
-                            Type = 0
-                        },
-                        new
-                        {
-                            PostId = 5,
+                            PostId = 2,
                             UserId = 2,
                             Type = 0
                         });

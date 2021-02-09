@@ -15,7 +15,9 @@ export class AuthGuard implements CanActivate {
                     return authenticated ? of(authenticated) : this._authSevice.tryAuthenticate();
                 }),
                 tap(success => {
-                    if (!success) this._authSevice.redirectToSignInPage();    
+                    if (!success) this._authSevice.redirectToSignInPage(); 
+                    
+                    
                 })
             )
     }

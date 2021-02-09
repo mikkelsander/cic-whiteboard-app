@@ -23,14 +23,16 @@ namespace CIC.WhiteboardApp.Controllers
             _context = context;
         }
 
-        // GET: api/Posts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts()
         {
-            return await _context.Posts
+
+            var posts = await _context.Posts
                 .Include(p => p.Comments)
                 .Include(p => p.Reactions)
                 .ToListAsync();
+
+            return Ok(posts);
         }
 
 
@@ -48,7 +50,7 @@ namespace CIC.WhiteboardApp.Controllers
         }
 
 
-        public async Task<IActionResult> PutPost(int id, Post post)
+        public async Task<ActionResult<Post>> PutPost(int id, Post post)
         {
             if (id != post.Id)
             {
@@ -73,7 +75,7 @@ namespace CIC.WhiteboardApp.Controllers
                 }
             }
 
-            return NoContent();
+            return post;
         }
 
 
@@ -88,7 +90,7 @@ namespace CIC.WhiteboardApp.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Post>> DeletePost(int id)
+        public async Task<IActionResult> DeletePost(int id)
         {
             var post = await _context.Posts.FindAsync(id);
             if (post == null)
@@ -99,12 +101,12 @@ namespace CIC.WhiteboardApp.Controllers
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
 
-            return post;
+            return NoContent();
         }
 
 
         [HttpPost("{postId}/reactions")]
-        public async Task<ActionResult<Post>> PostReaction(int postId, UserReaction reactionDto)
+        public async Task<ActionResult<UserReaction>> PostReaction(int postId, UserReaction reactionDto)
         {
 
             if (!await PostExists(postId))
@@ -134,7 +136,7 @@ namespace CIC.WhiteboardApp.Controllers
 
 
         [HttpPost("{postId}/comments")]
-        public async Task<ActionResult<Post>> PostComment(int postId, UserComment commentDto)
+        public async Task<ActionResult<UserComment>> PostComment(int postId, UserComment commentDto)
         {
 
             if (!await PostExists(postId))
@@ -165,7 +167,7 @@ namespace CIC.WhiteboardApp.Controllers
 
 
         [HttpDelete("{postId}/comments/{commentId}")]
-        public async Task<ActionResult<Post>> DeleteComment(int postId, int commentId)
+        public async Task<IActionResult> DeleteComment(int postId, int commentId)
         {
 
             if (!await PostExists(postId))
@@ -185,7 +187,7 @@ namespace CIC.WhiteboardApp.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Created("", comment);
+            return NoContent();
         }
 
 

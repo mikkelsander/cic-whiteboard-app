@@ -5,28 +5,26 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { WhiteboardComponent } from './whiteboard/whiteboard.component';
+import { WhiteboardComponent } from './features/whiteboard/whiteboard.component';
 import { AuthModule } from './auth/auth.module';
-import { WhiteboardModule } from './whiteboard/whiteboard.module';
+import { WhiteboardModule } from './features/whiteboard/whiteboard.module';
+import { WhiteboardResolver } from './features/whiteboard/whiteboard.resolver';
+import { PostsHttpService } from './services/posts.http';
+import { UsersHttpService } from './services/users.http';
 
 
 const appRoutes: Routes = [
   {
-    path: 'home',
-    component: HomeComponent,
-  },
-  {
       path: 'whiteboard',
       canActivate: [AuthGuard],
+      resolve: [WhiteboardResolver],
       component: WhiteboardComponent,
-      // loadChildren: () => import('./whiteboard/whiteboard.module').then(m => m.WhiteboardModule)
   },
   {
       path: '**',
-      redirectTo: 'home'
+      redirectTo: 'whiteboard'
   }
 ];
 
@@ -35,7 +33,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +43,7 @@ const appRoutes: Routes = [
     AuthModule,
     WhiteboardModule
   ],
-  providers: [],
+  providers: [PostsHttpService, UsersHttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CIC.WhiteboardApp.Data.Data;
 using CIC.WhiteboardApp.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CIC.WhiteboardApp.Controllers
 {
@@ -23,14 +24,31 @@ namespace CIC.WhiteboardApp.Controllers
             _context = context;
         }
 
-        // GET: api/Users
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
-        // GET: api/Users/5
+        [HttpGet("current")]
+        public async Task<ActionResult<User>> GetCurrentUser()
+        {
+            //hack because I've run out of time..
+            var identity = User.Identity as ClaimsIdentity;
+            var nameClaim = identity.Claims.Where(c => c.Type == "name").FirstOrDefault();
+
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Name == nameClaim.Value);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -44,11 +62,8 @@ namespace CIC.WhiteboardApp.Controllers
             return user;
         }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<ActionResult<User>> PutUser(int id, User user)
         {
             if (id != user.Id)
             {
@@ -73,12 +88,9 @@ namespace CIC.WhiteboardApp.Controllers
                 }
             }
 
-            return NoContent();
+            return user;
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -88,9 +100,9 @@ namespace CIC.WhiteboardApp.Controllers
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 
-        // DELETE: api/Users/5
+
         [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
@@ -101,7 +113,7 @@ namespace CIC.WhiteboardApp.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return user;
+            return NoContent();
         }
 
         private bool UserExists(int id)

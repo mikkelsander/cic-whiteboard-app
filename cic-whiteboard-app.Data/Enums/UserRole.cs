@@ -7,8 +7,8 @@ namespace CIC.WhiteboardApp.Data.Enums
 {
     public enum UserRole
     {
-        Admin = 0,
+        User = 0,
         Moderator = 1,
-        Regular = 2
+        Admin = 2,
     }
 }
