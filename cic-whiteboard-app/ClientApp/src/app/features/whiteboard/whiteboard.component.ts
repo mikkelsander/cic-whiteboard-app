@@ -32,18 +32,61 @@ export class WhiteboardComponent implements OnInit {
 
 
   dragStart(event: DragEvent, post: Post) {
+    console.log(event)
+    console.log(post)
+
+    // let elem = document.createElement('div');
+    // elem.id = 'drag-ghost';
+    // elem.style.position = 'absolute';
+    // elem.style.top = '-1000px';
+    // elem.style.height = '30px'
+    // elem.style.background = 'black';
+    // elem.style.color = 'white';
+    // elem.style.padding = '5px 10px 5px 10px'
+    // elem.style.verticalAlign = 'center';
+    // elem.style.textAlign = 'center';
+    // elem.textContent = 'Post'
+    // document.body.appendChild(elem);
+
+    // event.dataTransfer.setDragImage(elem, -20, 0);
+
     event.dataTransfer.dropEffect = 'move';
     event.dataTransfer.setData('postId', post.id.toString());
   }
 
-  dragOver(event: DragEvent) {
+  dragEnd(event: DragEvent) {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+
+    // let list = document.getElementsByClassName('highlight') as HTMLCollection
+
+    // for (var i = 0; i < list.length; i++) {
+    //     list[i].classList.remove('highlight');
+    // }
+
+    // const ghost = document.getElementById("drag-ghost");
+    // if (ghost.parentNode) {
+    //     ghost.parentNode.removeChild(ghost);
+    // }
+}
+
+  dragOver(event: DragEvent) {
+      event.preventDefault();
+      event.dataTransfer.dropEffect = 'move';
   }
 
   drop(event: DragEvent) {
     event.preventDefault();
-    const postId = Number(event.dataTransfer.getData('postId'));
+
+   const postId = Number(event.dataTransfer.getData('postId'));
+
+    let posts = [...this.posts];
+    let index = this.posts.findIndex(p => p.id === postId);
+
+    posts[index].offsetX = event.offsetX;
+    posts[index].offsetY = event.offsetY;
+    
+    this.posts = [...posts];
+
     this._whiteboardStore.movePost(postId, event.offsetX, event.offsetY,).subscribe();
   }
 
