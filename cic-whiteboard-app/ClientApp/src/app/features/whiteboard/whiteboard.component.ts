@@ -3,8 +3,6 @@ import { tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Post } from 'src/app/models/post';
 import { User } from 'src/app/models/user';
-import { UserReaction } from 'src/app/models/user-reaction';
-import { PostReactionEvent } from './components/post/post.component';
 import { WhiteboardStore } from './whiteboard.store';
 
 @Component({
