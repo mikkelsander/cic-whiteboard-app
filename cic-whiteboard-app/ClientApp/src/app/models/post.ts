@@ -8,8 +8,8 @@ export interface Post {
     title: string;
     content: string;
 
-    top?: number;
-    left?: number;
+    offsetX?: number;
+    offsetY?: number;
 
     comments: UserComment[];
     reactions: UserReaction[];

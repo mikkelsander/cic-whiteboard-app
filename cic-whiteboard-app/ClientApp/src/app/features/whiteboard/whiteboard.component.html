@@ -6,7 +6,7 @@
 </header>
 
 <div class="whiteboard" (dragover)="dragOver($event)" (drop)="drop($event)">
-  <div class="post" *ngFor="let post of posts" draggable="true" (dragstart)="dragStart($event, post)" (dragover)="dragOver($event)" (drop)="drop($event)" [ngStyle]="{'top': post.top + 'px', 'left': post.left + 'px'}">
+  <div class="post" *ngFor="let post of posts" draggable="true" (dragstart)="dragStart($event, post)" (dragover)="dragOver($event)" (drop)="drop($event)" [ngStyle]="{'top': post.offsetY + 'px', 'left': post.offsetX + 'px'}">
     <app-post [post]="post"></app-post>
   </div>
 </div>

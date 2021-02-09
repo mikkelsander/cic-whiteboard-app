@@ -101,9 +101,9 @@ export class WhiteboardStore {
     }
 
 
-    movePost(postId: number, top: number, left: number): Observable<any> {
+    movePost(postId: number, offsetX: number, offsetY: number): Observable<any> {
         let post = this.state.posts.find(p => p.id === postId);
-        return this._postsHttpService.updatePost({...post, top: top, left: left})
+        return this._postsHttpService.updatePost({...post, offsetX: offsetX, offsetY: offsetY})
     }
 
 

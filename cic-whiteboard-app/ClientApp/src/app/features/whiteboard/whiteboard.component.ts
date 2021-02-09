@@ -44,7 +44,7 @@ export class WhiteboardComponent implements OnInit {
   drop(event: DragEvent) {
     event.preventDefault();
     const postId = Number(event.dataTransfer.getData('postId'));
-    this._whiteboardStore.movePost(postId, event.offsetY, event.offsetX).subscribe();
+    this._whiteboardStore.movePost(postId, event.offsetX, event.offsetY,).subscribe();
   }
 
 
