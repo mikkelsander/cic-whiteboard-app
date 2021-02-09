@@ -5,23 +5,16 @@ using System.Threading.Tasks;
 
 namespace CIC.WhiteboardApp.Dtos
 {
-    public class PostDto
+    public class PostUpdateDto
     {
-        public int Id { get; set; }
-
         public string Title { get; set; }
         public string Content { get; set; }
 
         public int? Left { get; set; }
         public int? Top { get; set; }
 
-        public DateTime CreatedTime { get; set; }
         public DateTime LastModifiedTime { get; set; }
 
         public int? UserId { get; set; }
-
-
-        public ICollection<UserReactionDto> Reactions { get; set; }
-        public ICollection<UserCommentDto> Comments { get; set; }
     }
 }

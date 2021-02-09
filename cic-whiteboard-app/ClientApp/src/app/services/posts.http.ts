@@ -25,7 +25,7 @@ export class PostsHttpService
         return this._httpClient.post<Post>(this.baseUrl, post);
     }
 
-    editPost(post: Post): Observable<Post> {
+    updatePost(post: Post): Observable<Post> {
         return this._httpClient.put<Post>(this.baseUrl + '/' + post.id, post);
     }
 

@@ -31,7 +31,7 @@ export class WhiteboardStore {
     ) {
         this._state$ = new BehaviorSubject(new WhiteboardState());
         this.state$ = this._state$.asObservable();
-        
+
         this.connection = new signalR.HubConnectionBuilder()
             .withUrl(environment.POST_HUB_URL)
             .withAutomaticReconnect()
@@ -43,9 +43,41 @@ export class WhiteboardStore {
     private connect() {
         // console.log("connect");
         this.connection.start();
-        this.connection.on('PostUpdated', (postId: number, post: Post) => {
-          console.log(post);
-        });
+
+        this.connection.on('PostUpdated', (updatedPost: Post) => {
+            if (updatedPost) {
+                let posts = [...this.state.posts];
+                let index = posts.findIndex(p => p.id === updatedPost.id);
+
+                if (index > -1) {
+                    posts[index] = updatedPost;
+                }
+                else {
+                    posts.push(updatedPost);
+                }
+
+                this.setState({
+                    ...this.state,
+                    posts: posts
+                });
+            }
+        })
+
+        this.connection.on('PostDeleted', (postId: number) => {
+            let posts = [...this.state.posts];
+            let index = posts.findIndex(p => p.id === postId);
+
+            if (index > 0) {
+                posts.splice(index, 1);
+
+                this.setState({
+                    ...this.state,
+                    posts: [...posts]
+                });
+            }
+
+        })
+
         this.connection.onclose((event) => console.log(event))
     }
 
@@ -69,54 +101,60 @@ export class WhiteboardStore {
     }
 
 
+    movePost(postId: number, top: number, left: number): Observable<any> {
+        let post = this.state.posts.find(p => p.id === postId);
+        return this._postsHttpService.updatePost({...post, top: top, left: left})
+    }
+
+
     createReaction(postId: number, type: ReactionType) {
-        return this._postsHttpService.postReaction(<UserReaction> {
+        return this._postsHttpService.postReaction(<UserReaction>{
             userId: this.state.currentUser.id,
             postId: postId,
             type: type,
         })
-        .pipe(
-            // tap(postedReaction => {
-            //     let _posts = [...this.state.posts];
-            //     let _post = _posts.find(p => p.id === postedReaction.postId);
-            //     let _reaction = _post.reactions.find(r => r.id === postedReaction.id);
+            .pipe(
+                // tap(postedReaction => {
+                //     let _posts = [...this.state.posts];
+                //     let _post = _posts.find(p => p.id === postedReaction.postId);
+                //     let _reaction = _post.reactions.find(r => r.id === postedReaction.id);
 
-            //     if (_reaction === undefined) {
-            //         _post.reactions.push(postedReaction);
-            //     }
-            //     else {
-            //         _reaction = postedReaction;
-            //     }
+                //     if (_reaction === undefined) {
+                //         _post.reactions.push(postedReaction);
+                //     }
+                //     else {
+                //         _reaction = postedReaction;
+                //     }
 
-            //     this.setState({
-            //         ...this.state,
-            //         posts: _posts
-            //     });       
-            // })
-        );
+                //     this.setState({
+                //         ...this.state,
+                //         posts: _posts
+                //     });       
+                // })
+            );
     }
 
     createComment(comment: UserComment) {
         return this._postsHttpService.postComment(comment)
-        .pipe(
-            // tap(postedComment => {
-            //     let _posts = [...this.state.posts];
-            //     let _post = _posts.find(p => p.id === postedComment.postId);
-            //     let _comment = _post.comments.find(c => c.id === postedComment.id);
-                
-            //     if (_comment === undefined) {
-            //         _post.comments.push(postedComment);
-            //     }
-            //     else {
-            //         _comment = postedComment;
-            //     }
+            .pipe(
+                // tap(postedComment => {
+                //     let _posts = [...this.state.posts];
+                //     let _post = _posts.find(p => p.id === postedComment.postId);
+                //     let _comment = _post.comments.find(c => c.id === postedComment.id);
 
-            //     this.setState({
-            //         ...this.state,
-            //         posts: _posts
-            //     });       
-            // })
-        );
+                //     if (_comment === undefined) {
+                //         _post.comments.push(postedComment);
+                //     }
+                //     else {
+                //         _comment = postedComment;
+                //     }
+
+                //     this.setState({
+                //         ...this.state,
+                //         posts: _posts
+                //     });       
+                // })
+            );
     }
 
     private get state(): WhiteboardState {

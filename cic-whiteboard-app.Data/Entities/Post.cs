@@ -16,8 +16,8 @@ namespace CIC.WhiteboardApp.Data.Entities
         public string Title { get; set; }
         public string Content { get; set; }
 
-        //public int? X { get; set; }
-        //public int? Y { get; set; }
+        public int? Top { get; set; }
+        public int? Left { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public DateTime LastModifiedTime { get; set; }

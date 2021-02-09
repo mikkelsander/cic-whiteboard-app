@@ -58,41 +58,34 @@ namespace CIC.WhiteboardApp.Controllers
             return post;
         }
 
-
-        public async Task<ActionResult<Post>> PutPost(int id, Post post)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Post>> PutPost(int id, PostUpdateDto dto)
         {
-            if (id != post.Id)
+            Post post = await _context.Posts.FindAsync(id);
+
+            if (post == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            _mapper.Map(dto, post);
 
             _context.Entry(post).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await PostExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
-            await BroadcastPostUpdated(post.Id);
+            await BroadcastPostUpdated(id);
 
             return Ok();
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<Post>> PostPost(Post post)
+        public async Task<ActionResult<Post>> PostPost(PostCreateDto dto)
         {
+
+            Post post = _mapper.Map<Post>(dto);
+
             _context.Posts.Add(post);
 
             await _context.SaveChangesAsync();
@@ -117,7 +110,7 @@ namespace CIC.WhiteboardApp.Controllers
 
             await _context.SaveChangesAsync();
 
-            await BroadcastPostUpdated(post.Id);
+            await BroadcastPostDeleted(post.Id);
 
             return NoContent();
         }
@@ -224,8 +217,13 @@ namespace CIC.WhiteboardApp.Controllers
 
             PostDto dto = post == null ? null : _mapper.Map<PostDto>(post);
 
-            await _hubContext.Clients.All.SendAsync("PostUpdated", postId, dto);
+            await _hubContext.Clients.All.SendAsync("PostUpdated", dto);
 
+        }
+
+        private async Task BroadcastPostDeleted(int postId)
+        {
+            await _hubContext.Clients.All.SendAsync("PostDeleted", postId);
         }
 
         private async Task<bool> PostExists(int id)

@@ -11,6 +11,9 @@ namespace CIC.WhiteboardApp.AutoMapper
         {
 
             CreateMap<Post, PostDto>();
+            CreateMap<PostCreateDto, Post>();
+            CreateMap<PostUpdateDto, Post>();
+
             CreateMap<User, UserDto>();
             CreateMap<UserComment, UserCommentDto>();
             CreateMap<UserReaction, UserReactionDto>();

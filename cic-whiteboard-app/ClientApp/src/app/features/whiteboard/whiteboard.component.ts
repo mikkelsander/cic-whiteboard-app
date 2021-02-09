@@ -29,6 +29,25 @@ export class WhiteboardComponent implements OnInit {
       ).subscribe();
   }
 
+
+
+  dragStart(event: DragEvent, post: Post) {
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.setData('postId', post.id.toString());
+  }
+
+  dragOver(event: DragEvent) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }
+
+  drop(event: DragEvent) {
+    event.preventDefault();
+    const postId = Number(event.dataTransfer.getData('postId'));
+    this._whiteboardStore.movePost(postId, event.offsetY, event.offsetX).subscribe();
+  }
+
+
   signOut() {
     this._authService.signOutUser();
     this._authService.redirectToSignInPage();
