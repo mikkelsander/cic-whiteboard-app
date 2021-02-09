@@ -10,7 +10,9 @@ I decided to use Azure AD for authentication, as I have done this a few times be
 I hindsigt it was bad idea, as I have wasted time configuring instead of implementing features.
 
 You can sign in with either of two accounts which are registered on Azure AD:
+
 account: Bertha@cicwhiteboard@onmicrosoft.com   pw: Wucu4793
+
 account: Sam@cicwhiteboard@onmicrosoft.com      pw: Salu4705
 
 To run the app:
