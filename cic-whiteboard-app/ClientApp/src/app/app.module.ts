@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { WhiteboardComponent } from './features/whiteboard/whiteboard.component';
 import { AuthModule } from './auth/auth.module';
 import { WhiteboardModule } from './features/whiteboard/whiteboard.module';
@@ -32,7 +31,6 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -4,14 +4,16 @@ using CIC.WhiteboardApp.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace cic_whiteboard_app.Data.Migrations
 {
     [DbContext(typeof(WhiteboardDbContext))]
-    partial class WhiteboardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210209160455_TopAndLeftPositions")]
+    partial class TopAndLeftPositions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,14 +37,14 @@ namespace cic_whiteboard_app.Data.Migrations
                     b.Property<DateTime>("LastModifiedTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OffsetX")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OffsetY")
+                    b.Property<int?>("Left")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Top")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -60,8 +62,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title",
                             UserId = 1
                         },
@@ -71,8 +71,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 2...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 2",
                             UserId = 1
                         },
@@ -82,8 +80,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 3...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 3",
                             UserId = 2
                         },
@@ -93,8 +89,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 4...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 4",
                             UserId = 1
                         },
@@ -104,8 +98,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 5...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 5",
                             UserId = 2
                         },
@@ -115,8 +107,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 6...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 6",
                             UserId = 2
                         },
@@ -126,8 +116,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 7...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 7",
                             UserId = 1
                         },
@@ -137,8 +125,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 8...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 8",
                             UserId = 1
                         },
@@ -148,8 +134,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 9...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 9",
                             UserId = 2
                         },
@@ -159,8 +143,6 @@ namespace cic_whiteboard_app.Data.Migrations
                             Content = "Cool post content 10...",
                             CreatedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastModifiedTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OffsetX = 0,
-                            OffsetY = 0,
                             Title = "Cool Post Title 10",
                             UserId = 2
                         });

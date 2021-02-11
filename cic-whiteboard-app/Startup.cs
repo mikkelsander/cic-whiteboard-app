@@ -1,4 +1,7 @@
+using AutoMapper;
+using CIC.WhiteboardApp.AutoMapper;
 using CIC.WhiteboardApp.Data.Data;
+using CIC.WhiteboardApp.Hubs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +38,10 @@ namespace CIC.WhiteboardApp
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddSignalR();
+
+            services.AddSingleton(new MapperConfiguration(cfg => cfg.AddProfile<DefaultProfile>()).CreateMapper());
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -65,13 +72,13 @@ namespace CIC.WhiteboardApp
 
             app.UseRouting();
 
-
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<PostHub>("/postHub");
             });
 
 

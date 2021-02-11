@@ -21,12 +21,6 @@ export class AuthService {
       .pipe(
         switchMap(() => this.oauthService.tryLoginImplicitFlow()),
         switchMap(() => of(this.oauthService.hasValidAccessToken())),
-        tap(success => {
-          console.log(success)
-          if(!success) {
-            this.redirectToSignInPage();
-          }
-        })
       );
   }
 
